@@ -1,60 +1,9 @@
 <?php
-define('API_KEY','990858867:AAFbugzeGNWbMQkShAHOjmGm_D5qHKLAvXs');
+define('API_KEY','1297794420:AAGqPUEDc0rkogT36ocpaYdI4MDCQKYdOkE');
 $admin = "621617473"; 
 $kanali = "-1001153541413";
 $kanal = "@dil_sozlarm";
 
-function joinchat($from){
-     global $message_id;
-     $gett = bot('getChatMember',[
-  'chat_id' =>"-1001153541413",
-  'user_id' => $from,
-  ]);
-  $gget = $gett->result->status;
-         if($gget=="creator" or $gget=="administrator" or $gget=="member"){
-      return true;
-         }else{
-$de = bot("sendmessage",[
-         "chat_id"=>$from,
-         "text"=>"*Quyidagi kanalga obuna boʻling va mendan foydalaning!*",
-         'parse_mode'=>'markdown',
-         "reply_to_message_id"=>$mid,
-"reply_markup"=>json_encode([
-"inline_keyboard"=>[
-[["text"=>"➕ A‘zo bo‘lish","url"=>"https://t.me/joinchat/AAAAAETBpSWxAFjppkDCow"],],
-[["text"=>"✅ Tasdiqlash","callback_data"=>"join"],],
-]
-]),
-]);  
- 
-return false;
-}
-}
-
-function reyting($chat_id){
-    $text = "🏆 <b>TOP 20 ta eng koʻp qo'shgan foydalanuvchilar:</b>\n\n";
-    $daten = [];
-    $rev = [];
-    $fayllar = glob("./soni/*.*");
-    foreach($fayllar as $file){
-        if(mb_stripos($file,".txt")!==false){
-        $value = file_get_contents($file);
-        $id = str_replace(["./soni/",".txt"],["",""],$file);
-        $daten[$value] = $id;
-        $rev[$id] = $value;
-        }
-        echo $file;
-    }
-
-    asort($rev);
-    $reversed = array_reverse($rev);
-    for($i=0;$i<20;$i+=1){
-        $order = $i+1;
-        $id = $daten["$reversed[$i]"];
-        $text.= "<b>{$order}</b>. <a href='tg://user?id={$id}'>{$id}</a> - "."<code>".$reversed[$i]."</code>"." <b>soʻm</b>"."\n";
-    }
-    return $text;
-}
 
 function bot($method,$datas=[]){
     $url = "https://api.telegram.org/bot".API_KEY."/".$method;
